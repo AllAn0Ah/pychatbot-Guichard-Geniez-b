@@ -77,6 +77,9 @@ def principal():
             print(climat(nom_fichiers))
         elif choix == "6":
             documents = str(input("Saisir une question :"))
+            questions = nettoyer_et_tokeniser(documents)
+            tf_dict = calculer_tf_question(questions)
+            print(calculer_tfidf_question(nom_fichiers, documents, tf_dict))
         elif choix == "0":
             print("fin")
             continuer = False
