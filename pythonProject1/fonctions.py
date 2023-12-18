@@ -172,3 +172,19 @@ def mots_importants(liste_tf_idf, mots):
     liste_de_mots = list(mots.keys())
     mots_importants = [liste_de_mots[index] for index in listmotimportants if index < len(liste_de_mots)]
     return mots_importants
+
+
+def climat(files_names):
+    climat_mot = ["climat", "eclologie"]
+    nb_climat_ecologie = []
+    for nom_fichier in files_names:
+        with open("./cleaned/" + nom_fichier, "r", encoding='utf-8') as file:
+            contenu = file.read().split()
+            a = 0
+            for mots in contenu:
+                for word in climat_mot:
+                    if mots == word:
+                        if a == 0:
+                            nb_climat_ecologie.append(nom_fichier)
+                        a += 1
+    return nb_climat_ecologie
