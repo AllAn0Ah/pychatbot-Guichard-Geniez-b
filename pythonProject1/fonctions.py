@@ -87,11 +87,12 @@ def tf(files_names):
     return mots
 
 def idf(files_names):
-    word_doc_count = {}
+    Score = []
 
     for nom_fichier in files_names:
         with open("./cleaned/" + nom_fichier, "r", encoding='utf-8') as file:
-            mots = file.read().split()
+            chaine = file.read()
+            mots = chaine.split()
             mots_sans_doublons = []
             ensemble_mots = set()
 
@@ -100,32 +101,57 @@ def idf(files_names):
                     ensemble_mots.add(mot)
                     mots_sans_doublons.append(mot)
 
+            dico = {}
+            # Initialise un dictionnaire vide
+            liste_mot = chaine.split()
+            # Met tout les mots de la châine dans une liste
+            for mot in liste_mot:
+                if mot in dico:
+                    dico[mot] += 1
+                else:
+                    dico[mot] = 1
+            # Si le mot est dans le dico, on augmente sa valeur de 1, sinon on l'ajoute
+            Score.append(dico)
 
-            for word in mots_sans_doublons:
-                word_doc_count[word] = word_doc_count.get(word, 0) + 1
+
 
     nb_doc = len(files_names)
     #calcule du idf avec le nombre de documents du corpus et la fréquences des mots dans le corpus
     IDF = {}
-    for word, count in word_doc_count.items():
-        IDF[word] = math.log10(nb_doc / count)
-
+    for mot in mots_sans_doublons:
+        compteur = 0
+        for i in range(nb_doc):
+            if mot in Score[i].keys():
+                compteur += 1
+        # Pour chaqun des mots, on compte dans combien de doc il apparait
+        IDF[mot] = math.log(nb_doc / compteur)
     return IDF
 
 def tf_idf(files_names):
-    TF_IDF = []  # Initialize TF_IDF inside the function for each set of documents
-    IDF = idf(files_names)
+    Score = []
     for nom_fichier in files_names:
-        Score = tf([nom_fichier])
-        tfidf_scores = [] #pour chaque document on calcule le tf_idf
-        for word, tf_score in IDF.items():
-            if word in Score:
-                tfidf_scores.append(tf_score * IDF[word])
+        with open("./cleaned/" + nom_fichier, "r", encoding='utf-8') as file:
+            chaine = file.read()
+            dico = {}
+            # Initialise un dictionnaire vide
+            liste_mot = chaine.split()
+            # Met tout les mots de la châine dans une liste
+            for mot in liste_mot:
+                if mot in dico:
+                    dico[mot] += 1
+                else:
+                    dico[mot] = 1
+            # Si le mot est dans le dico, on augmente sa valeur de 1, sinon on l'ajoute
+            Score.append(dico)
+    IDF = idf(files_names)
+    TF_IDF = [[], [], [], [], [], [], [], []]
+    nb_doc = len(Score)
+    for mot in IDF.keys():
+        for i in range(nb_doc):
+            if mot not in Score[i].keys():
+                TF_IDF[i].append(0)
             else:
-                tfidf_scores.append(0)#si le mot n'est pas dans le documents, on lui attribut la valeur 0
-
-        TF_IDF.append(tfidf_scores)
-
+                TF_IDF[i].append(IDF[mot] * Score[i][mot])
     return TF_IDF
 
 def mots_non_importants(liste_tf_idf, mots):
