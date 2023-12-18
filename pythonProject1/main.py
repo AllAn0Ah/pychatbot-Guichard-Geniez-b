@@ -74,12 +74,7 @@ def principal():
             if president_max_nation:
                 print(f"Nombre de fois où la 'Nation' a été mentionnée par {president_max_nation}: {nb_nation[president_max_nation]}")
         elif choix == "5":
-            if nb_climat_ecologie:
-                print("Président(s) ayant abordé le climat et/ou l'écologie :")
-                for president, nb in nb_climat_ecologie.items():
-                    print(f"{president} a mentionné ces sujets {nb} fois.")
-            else:
-                print("Aucune mention du climat ou de l'écologie n'a été trouvée dans les discours des présidents.")
+            print(climat(nom_fichiers))
         elif choix == "6":
             documents = str(input("Saisir une question :"))
         elif choix == "0":
