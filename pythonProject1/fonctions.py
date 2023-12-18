@@ -214,3 +214,30 @@ def climat(files_names):
                             nb_climat_ecologie.append(nom_fichier)
                         a += 1
     return nb_climat_ecologie
+
+def nettoyer_et_tokeniser(texte):
+    texte = texte.lower()  # Convertir en minuscules
+    # Enlever la ponctuation et diviser en mots
+    mots = ''.join(char if char.isalnum() else ' ' for char in texte).split()
+    return mots
+
+# Fonction pour calculer la fréquence des termes (TF)
+def calculer_tf_question(mots):
+    tf_dict = {}
+    total_mots = len(mots)
+    for mot in mots:
+        tf_dict[mot] = tf_dict.get(mot, 0) + 1
+    for mot in tf_dict:
+        tf_dict[mot] = tf_dict[mot] / total_mots
+    return tf_dict
+
+
+# Fonction pour calculer TF-IDF
+def calculer_tfidf_question(files_names, document, tf_dict):
+    mots_du_document = nettoyer_et_tokeniser(document)
+    IDF = idf(files_names)
+    TF_IDF = []
+    for mot in IDF.keys():
+        if mot in mots_du_document:
+            TF_IDF.append(IDF[mot] * tf_dict[mot])
+    return TF_IDF
