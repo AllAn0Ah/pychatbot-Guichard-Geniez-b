@@ -225,6 +225,28 @@ def climat(files_names):
                         a += 1
     return nb_climat_ecologie
 
+def nation(files_names):
+    fichier_nations = []
+    somme = []
+    for nom_fichier in files_names:
+        with open("./cleaned/" + nom_fichier, "r", encoding='utf-8') as file:
+            contenu = file.read().split()
+            a = 0
+            for mots in contenu:
+                if mots == "nation":
+                    if a == 0:
+                        fichier_nations.append(nom_fichier)
+                    a += 1
+        somme.append(a)
+    b = 0  # Trouver le maximum de la liste somme
+    for i in range(len(somme)):
+        if somme[i] >= b:
+            b = somme[i]
+        if somme[i] == b:
+            e = i
+    fichier_nation = fichier_nations[e]
+    return fichier_nations, fichier_nation, b
+
 def nettoyer_et_tokeniser(texte):
     texte = texte.lower()  # Convertir en minuscules
     # Enlever la ponctuation et diviser en mots
