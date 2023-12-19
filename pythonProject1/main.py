@@ -1,3 +1,13 @@
+"""
+
+My First Chatbot par Noah Guichard et Gabriel Geniez.
+Ceci est le fichier main.py, il est le fichier principal du projet et est celui qu'il faut lancer pour faire fonctionner le projet.
+
+
+"""
+
+
+
 from fonctions import *
 
 
