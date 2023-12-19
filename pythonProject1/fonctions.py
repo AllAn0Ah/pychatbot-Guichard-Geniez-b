@@ -1,7 +1,7 @@
 """
 
 My First Chatbot par Noah Guichard et Gabriel Geniez.
-Ceci est le fichier main.py, il est le fichier principal du projet et est celui qu'il faut lancer pour faire fonctionner le projet.
+Ceci est le fichier fonctions.py, il est le fichier qui sert à regrouper l'ensemble de nos fonctions qui nous permettent de répondre aux questions.
 
 
 """
