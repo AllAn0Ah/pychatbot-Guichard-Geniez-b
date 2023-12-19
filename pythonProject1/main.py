@@ -40,30 +40,7 @@ def principal():
     # Récupérer les mots les plus fréquents pour Chirac (en excluant les mots non importants)
     mots_importants_chirac = mots_importants([chirac_tfidf_scores], mots)
 
-    # Calculer le nombre de fois où "Nation" a été mentionnée par chaque président
-    nb_nation = {}
-    nation_index = list(mots.keys()).index('nation') if 'nation' in mots else None
-
-    if nation_index is not None:
-        for i, president in enumerate(prenoms_presidents):
-            if nation_index < len(liste_tf_idf[i]):
-                nb_nation[president] = liste_tf_idf[i][nation_index]
-
-
-    # Calculer le nombre de fois où "climat" ou "écologie" ont été mentionnés par chaque président
-    nb_climat_ecologie = {}
-    climat_index = list(mots.keys()).index('climat') if 'climat' in mots else None
-    ecologie_index = list(mots.keys()).index('écologie') if 'écologie' in mots else None
-
-    if climat_index is not None or ecologie_index is not None:
-        for i, president in enumerate(prenoms_presidents):
-            nb = 0
-            if climat_index is not None and climat_index < len(liste_tf_idf[i]):
-                nb += liste_tf_idf[i][climat_index]
-            if ecologie_index is not None and ecologie_index < len(liste_tf_idf[i]):
-                nb += liste_tf_idf[i][ecologie_index]
-            if nb > 0:
-                nb_climat_ecologie[president] = nb
+ 
 
     continuer = True
     while continuer:
@@ -78,11 +55,10 @@ def principal():
         elif choix == "3":
             print("Les mots les plus fréquents pour Jacques Chirac (hors mots non importants) :", mots_importants_chirac)
         elif choix == "4":
-            if nb_nation:
-                president_max_nation = max(nb_nation, key=nb_nation.get)
-                print(f"Le président ayant le plus parlé de la 'Nation' est {president_max_nation}.")
-            if president_max_nation:
-                print(f"Nombre de fois où la 'Nation' a été mentionnée par {president_max_nation}: {nb_nation[president_max_nation]}")
+            resultat = nation(nom_fichiers)
+            print(f"les fichier qui ont le termes 'nation' sont :  {resultat[0]}")
+            print(f"Le fichier avec le plus grand nombre d'occurrences du mot 'nation' est : {resultat[1]}")
+            print(f"Nombre total d'occurrences du mot 'nation' dans ce fichier : {resultat[2]}")
         elif choix == "5":
             print(climat(nom_fichiers))
         elif choix == "6":
