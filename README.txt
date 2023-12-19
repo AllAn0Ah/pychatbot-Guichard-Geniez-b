@@ -1,5 +1,5 @@
 # pychatbot-Guichard-Geniez-b
-project python chatbot Noah guichard et de Gabriel Geniez
+Projet python semestriel "MyFirstChatbot" par Noah guichard et Gabriel Geniez.
 
 Ce fichier a pour but d'informer sur l'utilisation de nos programmes. 
 Il est direct et simple pour faciliter la compréhension rapide du projet.
